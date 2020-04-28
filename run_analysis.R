@@ -22,8 +22,9 @@ fea <- grep("(mean|std)\\(\\)",features[,names],value = TRUE)
 n = length(fea)
 fea[n]="label"
 fea[n+1]="subject"
-test_c <- select(test,all_of(fea))
-train_c <- select(train,all_of(fea))
+fea2 <- gsub("[-()]",".",fea)
+test_c <- select(test,all_of(fea2))
+train_c <- select(train,all_of(fea2))
 combined <- rbind(train_c,test_c)
 act <- fread("activity_labels.txt",col.names=c("i","activity"))
 combined[["label"]] <- factor(combined[,label],levels = act[["i"]],labels= act[["activity"]])
